@@ -4,6 +4,7 @@ pipeline {
 
 environment {
 NETLIFY_SITE_ID = '81d95099-06cc-4b61-b14e-11eb83311320'
+NETLIFY_AUTH_TOKEN = credentials('netlify-token-dilhan')
 }
 
     stages {
@@ -54,6 +55,7 @@ NETLIFY_SITE_ID = '81d95099-06cc-4b61-b14e-11eb83311320'
                 npm install netlify-cli
                 node_modules/.bin/netlify --version
                 echo "Deploying to production Site Dilhan Tektas id 81d95099-06cc-4b61-b14e-11eb83311320"
+                node_modules/.bin/netlify status
                 '''
             }
         }
