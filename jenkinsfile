@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     stages {
-
+        
         stage('Build') {
             agent{
                 docker{
@@ -21,7 +21,7 @@ pipeline {
                 '''
             }
         }
-        stage('Deploy'){
+        stage('Test'){
             agent{
                 docker{
                     image 'node:18-alpine'
@@ -36,7 +36,7 @@ pipeline {
                 '''
             }
         }
-             stage('Deploy net') {
+         stage('Build') {
             agent{
                 docker{
                     image 'node:18-alpine'
@@ -45,10 +45,14 @@ pipeline {
             }
             steps {
                 sh'''
-               npm install netlify-cli 
+                npm install netlify-cli -g
                 netlify --version
                 '''
             }
+    }
+    post{
+        always {
+            junit'test-result/junit.xl'
         }
     }
 }
