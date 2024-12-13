@@ -1,6 +1,11 @@
 pipeline {
     agent any
 
+
+environment {
+NETLIFY_SITE_ID = '81d95099-06cc-4b61-b14e-11eb83311320'
+}
+
     stages {
         
         stage('Build') {
@@ -48,6 +53,7 @@ pipeline {
                 sh '''
                 npm install netlify-cli
                 node_modules/.bin/netlify --version
+                echo "Deploying to production Site Dilhan Tektas id 81d95099-06cc-4b61-b14e-11eb83311320"
                 '''
             }
         }
