@@ -1,20 +1,17 @@
 pipeline {
     agent any
 
-    environment{
-        NETLIFY_SITE_ID = 'b34c3e77-f58e-4085-bcdb-57d3abb0c9ae'
-    }
-
     stages {
+
         stage('Build') {
-            agent {
-                docker {
+            agent{
+                docker{
                     image 'node:18-alpine'
                     reuseNode true
                 }
             }
             steps {
-                sh '''
+                sh'''
                 ls -la
                 node --version
                 npm --version
@@ -24,42 +21,34 @@ pipeline {
                 '''
             }
         }
-
-        stage('Test') {
-            agent {
-                docker {
+        stage('Deploy'){
+            agent{
+                docker{
                     image 'node:18-alpine'
                     reuseNode true
                 }
             }
+
             steps {
                 sh '''
-                test -f build/index.html
-                npm test
+                    test -f build/index.html
+                    npm test
                 '''
             }
         }
-
-        stage('Deploy') {
-            agent {
-                docker {
+             stage('Build') {
+            agent{
+                docker{
                     image 'node:18-alpine'
                     reuseNode true
                 }
             }
             steps {
-                sh '''
-                npm install netlify-cli
+                sh'''
+               npm install netlify-cli 
                 netlify --version
-                echo "deploying to production. site id:b34c3e77-f58e-4085-bcdb-57d3abb0c9ae"
                 '''
             }
-        }
-    }
-
-    post {
-        always {
-            junit 'test-results/junit.xml'
         }
     }
 }
