@@ -56,6 +56,7 @@ NETLIFY_AUTH_TOKEN = credentials('netlify-token-dilhan')
                 node_modules/.bin/netlify --version
                 echo "Deploying to production Site Dilhan Tektas id 81d95099-06cc-4b61-b14e-11eb83311320"
                 node_modules/.bin/netlify status
+                node_modules/.bin/netlify deploy --dir=build --prod
                 '''
             }
         }
